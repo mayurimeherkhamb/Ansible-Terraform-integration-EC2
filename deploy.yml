@@ -1,0 +1,21 @@
+---
+- name: Install and configure Apache HTTPD
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Ensure Apache is installed
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start and enable Apache service
+      systemd:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Create a simple web page
+      copy:
+        content: "<h1>This is my Ansible-Terraform Integration Project</h1>"
+        dest: /var/www/html/index.html
